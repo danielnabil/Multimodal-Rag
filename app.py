@@ -9,6 +9,12 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
+required_secrets = ["GROQ_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]
+missing_secrets = [key for key in required_secrets if key not in st.secrets]
+
+if missing_secrets:
+    st.error(f"Missing secrets: {', '.join(missing_secrets)}")
+    st.stop()
 # Initialize session state
 if "retriever" not in st.session_state:
     st.session_state.retriever = None
