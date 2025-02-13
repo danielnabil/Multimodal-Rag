@@ -6,8 +6,7 @@ langchain
 langchain_groq
 langchain_google_genai
 langchain_openai
-langchain_chroma
-chromadb
+chromadb==0.3.29 
 beautifulsoup4
 lxml
 pip==22.0.3
