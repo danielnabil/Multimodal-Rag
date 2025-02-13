@@ -6,7 +6,7 @@ import tempfile
 import sqlite3
 
 import nltk
-nltk.download('punkt_tab')
+nltk.download()
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
