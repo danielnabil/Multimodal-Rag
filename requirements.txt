@@ -5,7 +5,7 @@ langchain_google_genai
 langchain_openai
 langchain_chroma
 unstructured[pdf]
-cv2
+opencv-python-headless==4.9.0.80
 chromadb
 beautifulsoup4
 pillow
