@@ -43,12 +43,13 @@ def process_pdf(file_path, groq_api_key, google_api_key):
 
     # Create summarization chains
     text_chain = create_text_chain(groq_api_key)
+    table_chain= create_table_chain(groq_api_key)
     image_chain = create_image_chain(google_api_key)
 
     # Generate summaries
     text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
     tables_html = [table.metadata.text_as_html for table in tables]
-    table_summaries = text_chain.batch(tables_html, {"max_concurrency": 3})
+    table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
     image_summaries = image_chain.batch(images)
 
     return {
@@ -74,6 +75,22 @@ def create_text_chain(api_key):
     """
     prompt = ChatPromptTemplate.from_template(prompt_text)
     model = ChatGroq(temperature=0.5, model="llama-guard-3-8b", api_key=api_key)
+    return {"element": lambda x: x} | prompt | model | StrOutputParser()
+
+def create_table_chain(api_key):
+    prompt_text = """
+    You are an assistant tasked with summarizing tables and text.
+    Give a concise summary of the table or text.
+
+    Respond only with the summary, no additionnal comment.
+    Do not start your message by saying "Here is a summary" or anything like that.
+    Just give the summary as it is.
+
+    Table or text chunk: {element}
+
+    """
+    prompt = ChatPromptTemplate.from_template(prompt_text)
+    model = ChatGroq(temperature=0.5, model="gemma2-9b-it", api_key=api_key)
     return {"element": lambda x: x} | prompt | model | StrOutputParser()
 
 def create_image_chain(api_key):
