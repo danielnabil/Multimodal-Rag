@@ -5,6 +5,7 @@ langchain_google_genai
 langchain_openai
 langchain_chroma
 unstructured[pdf]
+cv2
 chromadb
 beautifulsoup4
 pillow
