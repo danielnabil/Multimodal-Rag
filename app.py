@@ -6,7 +6,8 @@ import tempfile
 import sqlite3
 
 import nltk
-nltk.download()
+nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
