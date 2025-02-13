@@ -6,3 +6,6 @@ libreoffice
 pandoc
 poppler-utils
 tesseract-ocr-eng
+zlib1g-dev
+libjpeg-dev
+libpng-dev
