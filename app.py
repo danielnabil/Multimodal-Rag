@@ -5,6 +5,8 @@ from utils import decode_base64_image
 import tempfile
 import sqlite3
 
+import nltk
+nltk.download('punkt_tab')
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
