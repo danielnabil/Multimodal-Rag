@@ -1,8 +1,6 @@
 streamlit==1.42.0
 pillow==10.1.0  # Known stable version with wheels
 
-# Add this to prefer binary packages
---prefer-binary
 tiktoken
 langchain
 langchain_groq
