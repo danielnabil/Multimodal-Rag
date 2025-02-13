@@ -3,7 +3,11 @@ from processing import process_pdf
 from chains import setup_retriever, get_chain
 from utils import decode_base64_image
 import tempfile
+import sqlite3
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # Initialize session state
 if "retriever" not in st.session_state:

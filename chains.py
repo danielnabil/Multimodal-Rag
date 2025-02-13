@@ -9,9 +9,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from base64 import b64decode
 from bs4 import BeautifulSoup
 import uuid
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 def setup_retriever(texts, tables, images, text_summaries, table_summaries, image_summaries):
     vectorstore = Chroma(
