@@ -43,12 +43,13 @@ def process_pdf(file_path, groq_api_key, google_api_key):
 
     # Create summarization chains
     text_chain = create_text_chain(groq_api_key)
-    table_chain= create_table_chain(google_api_key)
+    table_chain= create_table_chain(groq_api_key)
     image_chain = create_image_chain(google_api_key)
 
     # Generate summaries
     text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
     tables_html = [table.metadata.text_as_html for table in tables]
+    print(len(tables_html))
     table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
     image_summaries = image_chain.batch(images)
 
@@ -90,7 +91,7 @@ def create_table_chain(api_key):
 
     """
     prompt = ChatPromptTemplate.from_template(prompt_text)
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", max_tokens=1024, google_api_key=api_key)
+    model = ChatGroq(temperature=0.5, model="llama3-70b-8192", api_key=api_key)
     return {"element": lambda x: x} | prompt | model | StrOutputParser()
 
 def create_image_chain(api_key):
