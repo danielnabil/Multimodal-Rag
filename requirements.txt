@@ -4,7 +4,7 @@ langchain_groq
 langchain_google_genai
 langchain_openai
 langchain_chroma
-"unstructured[pdf]"
+unstructured[pdf]
 chromadb
 beautifulsoup4
 pillow
