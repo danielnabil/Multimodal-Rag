@@ -18,4 +18,4 @@ unstructured-inference==0.5.4
 pypandoc
 pyopenssl
 streamlit_extras
-pysqlite3-binary==0.5.1
+pysqlite3-binary
