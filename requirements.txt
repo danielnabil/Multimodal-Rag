@@ -8,3 +8,4 @@ unstructured
 chromadb
 beautifulsoup4
 pillow
+lxml
