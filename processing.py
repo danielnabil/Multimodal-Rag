@@ -90,7 +90,7 @@ def create_table_chain(api_key):
 
     """
     prompt = ChatPromptTemplate.from_template(prompt_text)
-    model = ChatGroq(temperature=0.5, model="gemma2-9b-it", api_key=api_key)
+    model = ChatGroq(temperature=0.5, model="llama3-8b-8192", api_key=api_key)
     return {"element": lambda x: x} | prompt | model | StrOutputParser()
 
 def create_image_chain(api_key):
