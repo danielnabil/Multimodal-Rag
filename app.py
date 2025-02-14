@@ -4,7 +4,7 @@ from chains import setup_retriever, get_chain
 from utils import decode_base64_image
 import tempfile
 import sqlite3
-
+import os
 import nltk
 nltk.download('punkt_tab')
 nltk.download('averaged_perceptron_tagger_eng')
@@ -31,8 +31,10 @@ process_btn = st.button("Process Document")
 
 if process_btn and uploaded_file:
     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        file_path = tmp_file.name
+        bytes_data = uploaded_file.read()
+        file_path = os.path.join('./docs/', uploaded_file.name)
+        with open(file_path, 'wb') as f:
+            f.write(bytes_data)
         print(file_path)
         print("hereeeeee")
     raise NotImplementedError
