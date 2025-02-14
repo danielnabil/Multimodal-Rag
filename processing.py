@@ -27,7 +27,7 @@ def process_pdf(file_path, groq_api_key, google_api_key):
     texts = []
     print("length of chunks")
     print(len(chunks))
-    print(chunks[2])
+    print(chunks[10])
     for chunk in chunks:
         if "text_as_html" in vars(chunk.metadata):
             tables.append(chunk)
