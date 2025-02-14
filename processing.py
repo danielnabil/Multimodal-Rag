@@ -52,7 +52,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
         print(e)
 
     print("after the request ")
-    print(element_dicts)
+    # print(element_dicts)
     # chunks = partition_pdf(
     #     filename=file_path,
     #     infer_table_structure=False,
