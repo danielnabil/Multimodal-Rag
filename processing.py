@@ -28,7 +28,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
             }
             headers = {"unstructured-api-key": api_key}
 
-            response =  requests.post(api_url, files=files, data=data, headers=headers)
+            response =  requests.post(api_url, files=files, data=data, headers=headers, timeout=120)
             print(response)
 
     if response.status_code == 200:
@@ -38,17 +38,17 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     else:
         print("Error:", response.text)
         
-    chunks = partition_pdf(
-        filename=file_path,
-        infer_table_structure=False,
-        strategy="hi_res",
-        extract_image_block_types=["Image"],
-        extract_image_block_to_payload=True,
-        chunking_strategy="basic",
-        max_characters=10000,
-        combine_text_under_n_chars=5000,
-        new_after_n_chars=10000,
-    )
+    # chunks = partition_pdf(
+    #     filename=file_path,
+    #     infer_table_structure=False,
+    #     strategy="hi_res",
+    #     extract_image_block_types=["Image"],
+    #     extract_image_block_to_payload=True,
+    #     chunking_strategy="basic",
+    #     max_characters=10000,
+    #     combine_text_under_n_chars=5000,
+    #     new_after_n_chars=10000,
+    # )
     chunks = []
     # Separate elements
     tables = []
