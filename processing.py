@@ -12,7 +12,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     api_key = unstructured_api_key
 
     with open(file_path, "rb") as f:
-            files = {"files": f}
+            # files = {"files": f}
             # Set up additional parameters. Adjust these as needed.
             files = {
                 "files": f,
