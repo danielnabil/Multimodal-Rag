@@ -44,9 +44,9 @@ def process_pdf(file_path, groq_api_key, google_api_key):
     images = get_images_base64(chunks)
 
     # Create summarization chains
-    text_chain = create_text_chain(groq_api_key)
-    table_chain= create_table_chain(groq_api_key)
-    image_chain = create_image_chain(google_api_key)
+    # text_chain = create_text_chain(groq_api_key)
+    # table_chain= create_table_chain(groq_api_key)
+    # image_chain = create_image_chain(google_api_key)
 
     # Generate summaries
     # text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
