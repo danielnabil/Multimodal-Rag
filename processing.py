@@ -10,7 +10,7 @@ import unstructured_client
 from unstructured_client.models import shared
 
 
-def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, uploaded_file):
+async def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, uploaded_file):
     # PDF Partitioning
    
     client = unstructured_client.UnstructuredClient(
@@ -40,7 +40,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     }
 
     try:
-        res = client.general.partition(
+        res = await client.general.partition_async(
             request=req,
             server_url="https://api.unstructured.io/general/v0/general"
         )
