@@ -36,10 +36,12 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
         result = response.json()
         # Process the returned JSON (which includes the extracted elements)
         print(result)
+
     else:
         print("Error:", response.text)
         
-    print(result)
+    printed= set([str(type(el)) for el in result])
+    print(printed)
     # chunks = partition_pdf(
     #     filename=file_path,
     #     infer_table_structure=False,
