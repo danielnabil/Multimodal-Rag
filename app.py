@@ -8,9 +8,9 @@ import os
 import nltk
 nltk.download('punkt_tab')
 nltk.download('averaged_perceptron_tagger_eng')
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 required_secrets = ["GROQ_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY", "UNSTRUCTURED_API_KEY"]
 missing_secrets = [key for key in required_secrets if key not in st.secrets]
