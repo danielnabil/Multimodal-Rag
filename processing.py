@@ -42,7 +42,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     try:
         res = client.general.partition(
             request=req,
-            server_url=os.getenv("UNSTRUCTURED_API_URL","https://api.unstructured.io/general/v0/general")
+            server_url="https://api.unstructured.io/general/v0/general"
         )
         element_dicts = [element for element in res.elements]
 
@@ -50,6 +50,9 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
         print(element_dicts[0])
     except Exception as e:
         print(e)
+
+    print("after the request ")
+    print(element_dicts[0])
     # chunks = partition_pdf(
     #     filename=file_path,
     #     infer_table_structure=False,
