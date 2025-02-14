@@ -97,18 +97,17 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     tables_html = [table.metadata.text_as_html for table in tables]
     # print("length of html tables")
     # print(len(tables_html))
-    raise NotImplementedError
     # table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
     # image_summaries = image_chain.batch(images)
 
-    return {
-        "texts": texts,
-        "tables": tables_html,
-        "images": images,
-        "text_summaries": text_summaries,
-        "table_summaries": table_summaries,
-        "image_summaries": image_summaries
-    }
+    # return {
+    #     "texts": texts,
+    #     "tables": tables_html,
+    #     "images": images,
+    #     "text_summaries": text_summaries,
+    #     "table_summaries": table_summaries,
+    #     "image_summaries": image_summaries
+    # }
 
 def create_text_chain(api_key):
     prompt_text = """
