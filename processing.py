@@ -3,22 +3,46 @@ from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 import os
+import requests
 from langchain_core.output_parsers import StrOutputParser
 
-def process_pdf(file_path, groq_api_key, google_api_key):
+def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, uploaded_file):
     # PDF Partitioning
-    chunks = partition_pdf(
-        filename=file_path,
-        infer_table_structure=False,
-        strategy="hi_res",
-        extract_image_block_types=["Image"],
-        extract_image_block_to_payload=True,
-        chunking_strategy="basic",
-        max_characters=10000,
-        combine_text_under_n_chars=5000,
-        new_after_n_chars=10000,
-    )
+    api_url = os.getenv("UNSTRUCTURED_API_URL", "https://api.unstructured.io/general/v0/general")
+    api_key = unstructured_api_key
 
+    files = {"files": uploaded_file}
+    # Set up additional parameters. Adjust these as needed.
+    data = {
+        "strategy": "hi_res",
+        "chunking_strategy": "by_title",
+        "max_characters": 10000,
+        "new_after_n_chars": 6000,
+        # Add other parameters as desired...
+    }
+    headers = {"unstructured-api-key": api_key}
+
+    response = requests.post(api_url, files=files, data=data, headers=headers)
+
+    if response.status_code == 200:
+        result = response.json()
+        # Process the returned JSON (which includes the extracted elements)
+        print(result)
+    else:
+        print("Error:", response.text)
+        
+    # chunks = partition_pdf(
+    #     filename=file_path,
+    #     infer_table_structure=False,
+    #     strategy="hi_res",
+    #     extract_image_block_types=["Image"],
+    #     extract_image_block_to_payload=True,
+    #     chunking_strategy="basic",
+    #     max_characters=10000,
+    #     combine_text_under_n_chars=5000,
+    #     new_after_n_chars=10000,
+    # )
+    chunks = []
     # Separate elements
     tables = []
     texts = []

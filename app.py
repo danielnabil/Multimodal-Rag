@@ -12,7 +12,7 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-required_secrets = ["GROQ_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]
+required_secrets = ["GROQ_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY", "UNSTRUCTURED_API_KEY"]
 missing_secrets = [key for key in required_secrets if key not in st.secrets]
 
 if missing_secrets:
@@ -43,7 +43,9 @@ if process_btn and uploaded_file:
         processed_data = process_pdf(
             file_path,
             groq_api_key=st.secrets["GROQ_API_KEY"],
-            google_api_key=st.secrets["GOOGLE_API_KEY"]
+            google_api_key=st.secrets["GOOGLE_API_KEY"],
+            unstructured_api_key=st.secrets["UNSTRUCTURED_API_KEY"],
+            uploaded_file=uploaded_file
         )
         
         st.session_state.retriever = setup_retriever(
