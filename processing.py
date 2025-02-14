@@ -52,6 +52,7 @@ def process_pdf(file_path, groq_api_key, google_api_key):
     # text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
     tables_html = [table.metadata.text_as_html for table in tables]
     print("length of html tables")
+    print(tables_html[1])
     print(len(tables_html))
     raise NotImplementedError
     # table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
