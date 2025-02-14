@@ -2,11 +2,14 @@ from unstructured.partition.pdf import partition_pdf
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
-
+import os
 from langchain_core.output_parsers import StrOutputParser
 
 def process_pdf(file_path, groq_api_key, google_api_key):
     # PDF Partitioning
+    if not os.path.exists(file_path) or not os.path.isfile(file_path):
+            print("file_path not exist")
+            raise NotImplementedError
     chunks = partition_pdf(
         filename=file_path,
         infer_table_structure=True,
