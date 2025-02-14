@@ -14,7 +14,8 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     with open(file_path, "rb") as f:
             files = {"files": f}
             # Set up additional parameters. Adjust these as needed.
-            data = {
+            files = {
+                "files": f,
                 "strategy": "hi_res",
                 "chunking_strategy": "by_title",
                 "max_characters": 10000,
@@ -26,9 +27,9 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
 
                 # Add other parameters as desired...
             }
-            headers = {"unstructured-api-key": api_key}
+            headers = {'accept': 'application/json', 'unstructured-api-key': api_key}
 
-            response =  requests.post(api_url, files=files, data=data, headers=headers, timeout=120)
+            response =  requests.post(api_url, files=files, headers=headers, timeout=120)
             print(response)
 
     if response.status_code == 200:
@@ -38,6 +39,7 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     else:
         print("Error:", response.text)
         
+    print(result)
     # chunks = partition_pdf(
     #     filename=file_path,
     #     infer_table_structure=False,
