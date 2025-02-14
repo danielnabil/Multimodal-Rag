@@ -38,7 +38,6 @@ if process_btn and uploaded_file:
         f.write(bytes_data)
     print(file_path)
     print("hereeeeee")
-    raise NotImplementedError
 
     with st.spinner("Processing document..."):
         processed_data = process_pdf(

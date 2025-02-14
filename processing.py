@@ -22,6 +22,8 @@ def process_pdf(file_path, groq_api_key, google_api_key):
     # Separate elements
     tables = []
     texts = []
+    print("length of chunks")
+    print(len(chunks))
     for chunk in chunks:
         if "text_as_html" in vars(chunk.metadata):
             tables.append(chunk)
@@ -47,11 +49,13 @@ def process_pdf(file_path, groq_api_key, google_api_key):
     image_chain = create_image_chain(google_api_key)
 
     # Generate summaries
-    text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
+    # text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
     tables_html = [table.metadata.text_as_html for table in tables]
+    print("length of html tables")
     print(len(tables_html))
-    table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
-    image_summaries = image_chain.batch(images)
+    raise NotImplementedError
+    # table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
+    # image_summaries = image_chain.batch(images)
 
     return {
         "texts": texts,
