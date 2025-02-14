@@ -33,6 +33,8 @@ if process_btn and uploaded_file:
     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
         tmp_file.write(uploaded_file.getvalue())
         file_path = tmp_file.name
+        print(file_path)
+        raise NotImplementedError
 
     with st.spinner("Processing document..."):
         processed_data = process_pdf(
