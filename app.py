@@ -30,13 +30,14 @@ uploaded_file = st.file_uploader("Upload PDF document", type=["pdf"])
 process_btn = st.button("Process Document")
 
 if process_btn and uploaded_file:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        bytes_data = uploaded_file.read()
-        file_path = os.path.join('./docs/', uploaded_file.name)
-        with open(file_path, 'wb') as f:
-            f.write(bytes_data)
-        print(file_path)
-        print("hereeeeee")
+    if not os.path.exists('./docs/'):
+        os.mkdir('./docs/')
+    bytes_data = uploaded_file.read()
+    file_path = os.path.join('./docs/', uploaded_file.name)
+    with open(file_path, 'wb') as f:
+        f.write(bytes_data)
+    print(file_path)
+    print("hereeeeee")
     raise NotImplementedError
 
     with st.spinner("Processing document..."):
