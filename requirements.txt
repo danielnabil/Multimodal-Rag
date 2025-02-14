@@ -16,4 +16,5 @@ pypandoc
 pyopenssl
 streamlit_extras
 pysqlite3-binary; sys_platform == 'linux'
-paddleocr
+paddlepaddle==3.0.0b1
+unstructured.paddleocr==2.8.1.0
