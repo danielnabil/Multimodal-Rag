@@ -7,19 +7,16 @@ from langchain_core.output_parsers import StrOutputParser
 
 def process_pdf(file_path, groq_api_key, google_api_key):
     # PDF Partitioning
-    if not os.path.exists(file_path) or not os.path.isfile(file_path):
-            print("file_path not exist")
-            raise NotImplementedError
     chunks = partition_pdf(
         filename=file_path,
-        infer_table_structure=True,
+        infer_table_structure=False,
         strategy="hi_res",
         extract_image_block_types=["Image"],
         extract_image_block_to_payload=True,
-        chunking_strategy="by_title",
+        chunking_strategy="basic",
         max_characters=10000,
-        combine_text_under_n_chars=2000,
-        new_after_n_chars=6000,
+        combine_text_under_n_chars=5000,
+        new_after_n_chars=10000,
     )
 
     # Separate elements
