@@ -28,7 +28,8 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
             }
             headers = {"unstructured-api-key": api_key}
 
-            response = requests.post(api_url, files=files, data=data, headers=headers)
+            response =  requests.post(api_url, files=files, data=data, headers=headers)
+            print(response)
 
     if response.status_code == 200:
         result = response.json()
@@ -52,9 +53,9 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     # Separate elements
     tables = []
     texts = []
-    print("length of chunks")
-    print(len(chunks))
-    print(chunks[10])
+    # print("length of chunks")
+    # print(len(chunks))
+    # print(chunks[10])
     for chunk in chunks:
         if "text_as_html" in vars(chunk.metadata):
             tables.append(chunk)
@@ -82,8 +83,8 @@ def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, up
     # Generate summaries
     # text_summaries = text_chain.batch(texts, {"max_concurrency": 3})
     tables_html = [table.metadata.text_as_html for table in tables]
-    print("length of html tables")
-    print(len(tables_html))
+    # print("length of html tables")
+    # print(len(tables_html))
     raise NotImplementedError
     # table_summaries = table_chain.batch(tables_html, {"max_concurrency": 3})
     # image_summaries = image_chain.batch(images)
