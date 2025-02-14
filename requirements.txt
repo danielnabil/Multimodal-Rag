@@ -18,3 +18,4 @@ streamlit_extras
 pysqlite3-binary; sys_platform == 'linux'
 paddlepaddle==3.0.0b1
 unstructured.paddleocr==2.8.1.0
+unstructured-client

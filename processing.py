@@ -4,44 +4,52 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 import os
 import requests
+import json
 from langchain_core.output_parsers import StrOutputParser
+import unstructured_client
+from unstructured_client.models import shared
+
 
 def process_pdf(file_path, groq_api_key, google_api_key,unstructured_api_key, uploaded_file):
     # PDF Partitioning
-    api_url = os.getenv("UNSTRUCTURED_API_URL", "https://api.unstructured.io/general/v0/general")
-    api_key = unstructured_api_key
+   
+    client = unstructured_client.UnstructuredClient(
+        api_key_auth=unstructured_api_key
+    )
 
-    with open(file_path, "rb") as f:
-            # files = {"files": f}
-            # Set up additional parameters. Adjust these as needed.
-            files = {
-                "files": f,
-                "strategy": "hi_res",
-                "chunking_strategy": "by_title",
-                "max_characters": 10000,
-                "new_after_n_chars": 6000,
-                "combine_text_under_n_chars":2000,
-                "extract_image_block_types": ["Image"],
-                "extract_image_block_to_payload":True,
-                "infer_table_structure":False,
+    filename = file_path
 
-                # Add other parameters as desired...
-            }
-            headers = {'accept': 'application/json', 'unstructured-api-key': api_key}
+    req = {
+        "partition_parameters": {
+            "files": {
+                "content": open(filename, "rb"),
+                "file_name": filename,
+            },
+            "strategy": shared.Strategy.HI_RES,
+            "chunking_strategy": "by_title",
+            "max_characters": 10000,
+            "new_after_n_chars": 6000,
+            "combine_text_under_n_chars":2000,
+            "extract_image_block_types": ["Image"],
+            "extract_image_block_to_payload":True,
+            "infer_table_structure":False,
+            "languages": ['eng'],
+            "split_pdf_allow_failed": True,    # If True, the partitioning continues even if some pages fail.
+            "split_pdf_concurrency_level": 15  # Set the number of concurrent request to the maximum value: 15.
+        }
+    }
 
-            response =  requests.post(api_url, files=files, headers=headers, timeout=120)
-            print(response)
+    try:
+        res = client.general.partition(
+            request=req,
+            server_url=os.getenv("UNSTRUCTURED_API_URL","https://api.unstructured.io/general/v0/general")
+        )
+        element_dicts = [element for element in res.elements]
 
-    if response.status_code == 200:
-        result = response.json()
-        # Process the returned JSON (which includes the extracted elements)
-        print(result)
-
-    else:
-        print("Error:", response.text)
-        
-    printed= set([str(type(el)) for el in result])
-    print(printed)
+        # Print the processed data's first element only.
+        print(element_dicts[0])
+    except Exception as e:
+        print(e)
     # chunks = partition_pdf(
     #     filename=file_path,
     #     infer_table_structure=False,
